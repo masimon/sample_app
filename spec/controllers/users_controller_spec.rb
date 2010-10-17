@@ -39,11 +39,11 @@ describe UsersController do
   describe "GET 'show'" do
 
     before(:each) do
-#      @user = Factory(:user)
-	@user = User.create!(:name => "Test user", 
-                             :email => "testuser@example.com", 
-                             :password => "foobar", 
-                             :password_confirmation => "foobar")
+      @user = Factory(:user)
+      #@user = User.create!(:name => "Test user", 
+      #                     :email => "testuser@example.com", 
+      #                     :password => "foobar", 
+      #                     :password_confirmation => "foobar")
 
     end
 
@@ -120,6 +120,11 @@ describe UsersController do
       it "should have a welcome message" do
         post :create, :user => @attr
         flash[:success].should =~ /welcome to the sample app/i
+      end
+
+      it "should sign the user in" do
+        post :create, :user => @attr
+        controller.should be_signed_in
       end
 
     end
