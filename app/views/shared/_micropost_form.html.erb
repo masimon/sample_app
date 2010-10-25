@@ -1,0 +1,30 @@
+<%= form_for @micropost do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  <div class="field">
+    <%= f.text_area :content, :onKeyUp => "updateFields('micropost[content]', remChars, 140)" %>
+  </div>
+  <div>
+    <input type="hidden" name="remChars" value="140">
+    <p>You have <span id="counter">140</span> characters remaining.</p>
+    <script type="text/javascript">
+    function updateFields(field,cntfield,maxlimit) {
+        // field must be re-obtained as bracketed names make javascript unhappy
+        field = document.getElementById('micropost_content')
+        textCounter(field,cntfield,maxlimit);
+        document.getElementById('counter').innerHTML = cntfield.value;
+    }
+    </script>
+    <script type="text/javascript">
+    function textCounter(field,cntfield,maxlimit) {
+        if (field.value.length > maxlimit) // if too long...trim it!
+            field.value = field.value.substring(0, maxlimit);
+        // otherwise, update 'characters left' counter
+        else
+            cntfield.value = maxlimit - field.value.length;
+        }
+    </script>
+  </div>
+  <div class="actions">
+    <%= f.submit "Submit" %>
+  </div>
+<% end %>
